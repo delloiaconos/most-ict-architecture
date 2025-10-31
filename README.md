@@ -17,7 +17,6 @@ Typical components include:
 - **Nginx** — as a lightweight reverse proxy and frontend router for web-based components.
 - **InfluxDB** *(optional)* — for time-series data storage and retrieval.
 - **WireGuard / VPN** *(optional)* — for secure remote data transmission.
-- **Custom microservices** — for specialized data collection or transformation tasks.
 
 ## Running 
 
@@ -29,10 +28,29 @@ docker network create most_net
 
 Then you can bring up the stack:
 ```bash
-docker compose up -d
+docker-compose -p mostict up -d
 ```
 
-## Utilities
+or you can use:
+
+```bash
+export COMPOSE_PROJECT_NAME=mostict
+docker-compose up -d
+```
+
+To stop and remove containers and networks, including volumes:
+
+```bash
+docker-compose down -v
+```
+
+
+If you used a custom project name (```mostict```):
+```bash
+docker-compose -p mostict down -v
+```
+
+## Some utility commands
 
 ### Running Nginx
 ```bash 
