@@ -1,7 +1,36 @@
 # most-ict-architecture
 MOST Spoke 5 - WP 3 ICT Architecture
 
+This repository contains the full configuration, Docker setup, and supporting files for developing and deploying an **ICT architecture for data collection and integration** within the **MOST Spoke 5 Porject**.
 
+The architecture is designed to enable flexible, modular, and containerized data acquisition, processing, and visualization across networked components.
+
+
+## Overview
+
+The system leverages **Docker Compose** to orchestrate multiple interoperable services that form the core of the data collection and management infrastructure.
+
+Each component is isolated in its own container but connected through shared networks to ensure secure and scalable communication.
+
+Typical components include:
+- **Node-RED** — for data flow orchestration, processing, and integration with IoT devices or APIs.
+- **Nginx** — as a lightweight reverse proxy and frontend router for web-based components.
+- **InfluxDB** *(optional)* — for time-series data storage and retrieval.
+- **WireGuard / VPN** *(optional)* — for secure remote data transmission.
+- **Custom microservices** — for specialized data collection or transformation tasks.
+
+## Running 
+
+Make sure the external network most_net already exists:
+
+```bash
+docker network create most_net
+```
+
+Then you can bring up the stack:
+```bash
+docker compose up -d
+```
 
 ## Utilities
 
