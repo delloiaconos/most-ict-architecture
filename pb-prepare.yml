@@ -1,0 +1,72 @@
+---
+- name: Prepare MOST Spoke 5 ICT architecutre environment
+  hosts: localhost
+  vars:
+    config_base_path: "/opt/most"
+
+  tasks:
+
+    - name: Ensure base directory `{{ config_base_path }}` exists
+      become: true
+      ansible.builtin.file:
+        path: "{{ config_base_path }}"
+        state: directory
+        mode: '0755'
+        owner: giroe
+        group: docker
+
+    - name: Ensure NGINX directory exists in `{{ config_base_path }}`
+      become: true
+      ansible.builtin.file:
+        path: "{{ config_base_path }}/nginx"
+        state: directory
+        mode: '0755'
+        owner: giroe
+        group: docker  
+    
+    - name: Copy NGINX configuration
+      copy:
+        src: config/nginx/nginx.conf
+        dest: "{{ config_base_path }}/nginx/nginx.conf"
+        owner: giroe
+        group: docker
+        mode: "0777"
+    
+    - name: Ensure INFLUX directory exists in `{{ config_base_path }}`
+      become: true
+      ansible.builtin.file:
+        path: "{{ config_base_path }}/influx/data"
+        state: directory
+        mode: '0775'
+        owner: giroe
+        group: docker        
+
+    - name: Copy INFLUX configuration
+      copy:
+        src: config/influx/influxdb.conf
+        dest: "{{ config_base_path }}/influx/influxdb.conf"
+        owner: giroe
+        group: docker
+        mode: "0777"
+
+    - name: Ensure NODERED directory exists in `{{ config_base_path }}`
+      become: true
+      ansible.builtin.file:
+        path: "{{ config_base_path }}/nodered"
+        state: directory
+        mode: '0775'
+        owner: giroe
+        group: docker        
+
+    - name: Copy NODERED configuration
+      copy:
+        src: config/nodered/settings.js
+        dest: "{{ config_base_path }}/nodered/settings.js"
+        owner: giroe
+        group: docker
+        mode: "0777"
+
+    - name: Ensure the docker network exists
+      community.docker.docker_network:
+        name: most_net
+        state: present
